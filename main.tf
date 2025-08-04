@@ -8,26 +8,26 @@ resource "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_virtual_network" "main" {
-  name                = "vnet-arena"
+  name                = "geocall-dev-vnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 }
 
 resource "azurerm_subnet" "main" {
-  name                 = "subnet-arena"
+  name                 = "geocall-dev-subnet"
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_network_interface" "main" {
-  name                = "nic-arena"
+  name                = "geocall-dev-vm-nic"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
   ip_configuration {
-    name                          = "ipconfig-arena"
+    name                          = "gc-dev-ipconfig"
     subnet_id                     = azurerm_subnet.main.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.main.id
@@ -35,11 +35,11 @@ resource "azurerm_network_interface" "main" {
 }
 
 resource "azurerm_public_ip" "main" {
-  name                = "pip-arena"
+  name                = "geocall-dev-vm-pip"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  allocation_method   = "Dynamic"
-  sku                 = "Basic"
+  allocation_method   = "Static"
+  sku                 = "Standard"
 }
 
 resource "azurerm_windows_virtual_machine" "main" {
@@ -71,7 +71,7 @@ resource "azurerm_windows_virtual_machine" "main" {
 }
 
 resource "azurerm_network_security_group" "main" {
-  name                = "nsg-arena"
+  name                = "geocall-dev-nsg"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
 
