@@ -1,0 +1,6 @@
+resource_group_name = "rg-example"
+location            = "eastus"
+vm_name             = "vm-example"
+admin_username      = "azureuser"
+admin_password      = "P@ssw0rd123!"
+vm_size             = "Standard_B1s"
